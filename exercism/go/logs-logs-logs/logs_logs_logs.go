@@ -6,11 +6,10 @@ import (
 )
 
 var appByRune = map[rune]string{
-	'\u2757': "recommendation",
+	'\u2757':     "recommendation",
 	'\U0001F50D': "search",
-	'\u2600': "weather",
+	'\u2600':     "weather",
 }
-
 
 // Application identifies the application emitting the given log.
 func Application(log string) string {
