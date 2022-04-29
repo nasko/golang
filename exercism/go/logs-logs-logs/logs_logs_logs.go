@@ -5,14 +5,15 @@ import (
 	"unicode/utf8"
 )
 
+var appByRune = map[rune]string{
+	'\u2757': "recommendation",
+	'\U0001F50D': "search",
+	'\u2600': "weather",
+}
+
 
 // Application identifies the application emitting the given log.
 func Application(log string) string {
-	appByRune := map[rune]string{
-		'❗': "recommendation",
-		'🔍': "search",
-		'☀': "weather",
-	}
 	for _, char := range log {
 		if _, keyExists := appByRune[char]; keyExists {
 			return appByRune[char]
