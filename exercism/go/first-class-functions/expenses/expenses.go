@@ -1,6 +1,9 @@
 package main //expenses
 
-import "fmt" // Record represents an expense record.
+import (
+	"errors"
+	"fmt"
+) // Record represents an expense record.
 
 type Record struct {
 	Day      int
@@ -58,19 +61,34 @@ func TotalByPeriod(in []Record, p DaysPeriod) float64 {
 // An error must be returned only if there are no records in the list that belong
 // to the given category, regardless of period of time.
 func CategoryExpenses(in []Record, p DaysPeriod, c string) (float64, error) {
-	panic("Please implement the CategoryExpenses function")
+	expenses := 0.0
+	categoryRecords := Filter(in, ByCategory(c))
+
+	if len(categoryRecords) == 0 {
+		return 0, errors.New("unknown category entertainment")
+	}
+
+	periodRecords := Filter(categoryRecords, ByDaysPeriod(p))
+
+	for _, r := range periodRecords {
+		expenses += r.Amount
+	}
+	return expenses, nil
 }
 
 func main() {
+	p1 := DaysPeriod{From: 1, To: 30}
+	p2 := DaysPeriod{From: 31, To: 60}
+
 	records := []Record{
-		{Day: 15, Amount: 16, Category: "entertainment"},
-		{Day: 32, Amount: 20, Category: "groceries"},
-		{Day: 40, Amount: 30, Category: "entertainment"},
+		{Day: 1, Amount: 15, Category: "groceries"},
+		{Day: 11, Amount: 300, Category: "utility-bills"},
+		{Day: 12, Amount: 28, Category: "groceries"},
+		{Day: 26, Amount: 300, Category: "university"},
+		{Day: 28, Amount: 1300, Category: "rent"},
 	}
 
-	p1 := DaysPeriod{From: 1, To: 30}
-
-	p2 := DaysPeriod{From: 31, To: 60}
-	fmt.Println(TotalByPeriod(records, p1))
-	fmt.Println(TotalByPeriod(records, p2))
+	fmt.Println(CategoryExpenses(records, p1, "entertainment"))
+	fmt.Println(CategoryExpenses(records, p1, "rent"))
+	fmt.Println(CategoryExpenses(records, p2, "rent"))
 }
