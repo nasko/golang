@@ -1,10 +1,10 @@
-package main //expenses
+package expenses
 
 import (
 	"errors"
-	"fmt"
-) // Record represents an expense record.
+)
 
+// Record represents an expense record.
 type Record struct {
 	Day      int
 	Amount   float64
@@ -74,21 +74,4 @@ func CategoryExpenses(in []Record, p DaysPeriod, c string) (float64, error) {
 		expenses += r.Amount
 	}
 	return expenses, nil
-}
-
-func main() {
-	p1 := DaysPeriod{From: 1, To: 30}
-	p2 := DaysPeriod{From: 31, To: 60}
-
-	records := []Record{
-		{Day: 1, Amount: 15, Category: "groceries"},
-		{Day: 11, Amount: 300, Category: "utility-bills"},
-		{Day: 12, Amount: 28, Category: "groceries"},
-		{Day: 26, Amount: 300, Category: "university"},
-		{Day: 28, Amount: 1300, Category: "rent"},
-	}
-
-	fmt.Println(CategoryExpenses(records, p1, "entertainment"))
-	fmt.Println(CategoryExpenses(records, p1, "rent"))
-	fmt.Println(CategoryExpenses(records, p2, "rent"))
 }
