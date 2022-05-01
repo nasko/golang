@@ -24,7 +24,7 @@ func (r *Resident) HasRequiredInfo() bool {
 		return false
 	}
 
-	return r.Age != 0
+	return r.Name != ""
 }
 
 // Delete deletes a resident's information.
