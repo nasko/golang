@@ -1,6 +1,7 @@
-package expenses
+package main //expenses
 
-// Record represents an expense record.
+import "fmt" // Record represents an expense record.
+
 type Record struct {
 	Day      int
 	Amount   float64
@@ -15,7 +16,13 @@ type DaysPeriod struct {
 
 // Filter returns the records for which the predicate function returns true.
 func Filter(in []Record, predicate func(Record) bool) []Record {
-	panic("Please implement the Filter function")
+	out := []Record{}
+	for _, r := range in {
+		if predicate(r) {
+			out = append(out, r)
+		}
+	}
+	return out
 }
 
 // ByDaysPeriod returns predicate function that returns true when
@@ -43,4 +50,16 @@ func TotalByPeriod(in []Record, p DaysPeriod) float64 {
 // to the given category, regardless of period of time.
 func CategoryExpenses(in []Record, p DaysPeriod, c string) (float64, error) {
 	panic("Please implement the CategoryExpenses function")
+}
+
+func main() {
+	records := []Record{
+		{Day: 1, Amount: 15, Category: "groceries"},
+		{Day: 11, Amount: 300, Category: "utility-bills"},
+		{Day: 12, Amount: 28, Category: "groceries"},
+	}
+
+	fmt.Println(Filter(records, func(r Record) bool {
+		return r.Day == 1
+	}))
 }
